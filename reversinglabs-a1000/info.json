@@ -1,0 +1,119 @@
+{
+  "name": "reversinglabs-a1000",
+  "label": "ReversingLabsA1000",
+  "version": "1.0.0",
+  "description": "ReversingLabs A1000 Malware Analysis",
+  "publisher": "CyberSponse",
+  "cs_compatible": true,
+  "cs_approved": true,
+  "category": "Malware Analysis",
+  "icon_small_name": "reversinglabs_logo.jpg",
+  "icon_large_name": "reversinglabs_logo.jpg",
+  "help_online":"https://help.cybersponse.com/support/solutions/articles/17000060998-reversinglabs-a1000-v1-0-0",
+  "configuration": {
+    "fields": [
+      {
+        "name": "username",
+        "title": "Username",
+        "type": "text",
+        "visible": true,
+        "required": true,
+        "editable": true
+      },
+      {
+        "editable": true,
+        "type": "text",
+        "name": "password",
+        "visible": true,
+        "title": "Password",
+        "required": true
+      },
+      {
+        "editable": true,
+        "type": "text",
+        "name": "url",
+        "visible": true,
+        "title": "Server",
+        "required": true,
+        "value": ""
+      }
+    ]
+  },
+  "operations": [
+    {
+      "operation": "upload_sample",
+      "title": "Upload Sample",
+      "enabled": true,
+      "description": "Submit sample to ReversingLabs A1000",
+      "parameters": [
+        {
+          "visible": true,
+          "name": "file_iri",
+          "title": "File IRI List",
+          "type": "text",
+          "value": "",
+          "required": true,
+          "editable": true
+        }
+      ],
+      "output_schema": {
+          "submitted": {},
+          "submit_failed": {},
+          "pre_exist": {}
+      }
+    },
+    {
+      "operation": "get_report",
+      "title": "Get Report using File Hash",
+      "enabled": true,
+      "description": "Retrieving the report for submitted sample file",
+      "parameters": [
+        {
+          "title": "File Hash",
+          "name": "file_hash",
+          "type": "text",
+          "visible": true,
+          "editable": true,
+          "required": true,
+          "value": ""
+        }
+      ],
+      "output_schema": {
+          "report": [
+            {
+              "results": []
+            }
+          ],
+          "not_found": ""
+        }
+    },
+    {
+      "operation": "re_analyze_sample",
+      "title": "Re-analyze Sample using File Hash",
+      "enabled": true,
+      "description": "Re-analyze submitted sample using File Hash",
+      "parameters": [
+        {
+          "title": "File Hash",
+          "name": "file_hash",
+          "type": "text",
+          "visible": true,
+          "editable": true,
+          "required": true,
+          "value": ""
+        }
+      ],
+      "output_schema": {
+          "re_analyzed": [
+            {
+              "results": [
+
+              ]
+            }
+          ],
+          "not_found": ""
+        }
+    }
+  ]
+
+}

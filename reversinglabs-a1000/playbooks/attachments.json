@@ -1,0 +1,1043 @@
+{
+  "modules": [
+    {
+      "@type": "StagingModelMetadata",
+      "type": "attachments",
+      "parentType": null,
+      "tableName": "attachments",
+      "ownable": true,
+      "trackable": true,
+      "indexable": true,
+      "attributes": [
+        {
+          "@type": "AttributeMetadata",
+          "type": "string",
+          "name": "rlDetails",
+          "length": null,
+          "formType": "richtext",
+          "dataSource": null,
+          "searchable": false,
+          "gridColumn": false,
+          "collection": false,
+          "inversedField": null,
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ rlDetails }}",
+          "descriptions": {
+            "singular": "ReversingLabs-A1000 Details"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "string",
+          "name": "fileHash",
+          "length": null,
+          "formType": "textarea",
+          "dataSource": null,
+          "searchable": true,
+          "gridColumn": true,
+          "collection": false,
+          "inversedField": null,
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": 255
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ fileHash }}",
+          "descriptions": {
+            "singular": "FileHash"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "string",
+          "name": "name",
+          "length": 255,
+          "formType": "text",
+          "dataSource": null,
+          "searchable": true,
+          "gridColumn": true,
+          "collection": false,
+          "inversedField": null,
+          "ownsRelationship": null,
+          "validation": {
+            "required": true,
+            "minlength": 0,
+            "maxlength": 255
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ name }}",
+          "descriptions": {
+            "singular": "Name"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "string",
+          "name": "description",
+          "length": null,
+          "formType": "richtext",
+          "dataSource": null,
+          "searchable": true,
+          "gridColumn": true,
+          "collection": false,
+          "inversedField": null,
+          "ownsRelationship": null,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ description }}",
+          "descriptions": {
+            "singular": "Description"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "string",
+          "name": "file",
+          "length": 255,
+          "formType": "file",
+          "dataSource": {
+            "model": "files"
+          },
+          "searchable": false,
+          "gridColumn": true,
+          "collection": false,
+          "inversedField": null,
+          "ownsRelationship": null,
+          "validation": {
+            "required": true,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ file }}",
+          "descriptions": {
+            "singular": "File"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "picklists",
+          "name": "type",
+          "length": null,
+          "formType": "picklist",
+          "dataSource": {
+            "model": "picklists",
+            "query": {
+              "logic": "AND",
+              "filters": [
+                {
+                  "field": "listName__name",
+                  "operator": "eq",
+                  "value": "AttachmentsType"
+                }
+              ],
+              "sort": [
+                {
+                  "field": "orderIndex",
+                  "direction": "ASC"
+                }
+              ]
+            }
+          },
+          "searchable": false,
+          "gridColumn": true,
+          "collection": false,
+          "inversedField": null,
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ type }}",
+          "descriptions": {
+            "singular": "Type"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "alerts",
+          "name": "alerts",
+          "length": null,
+          "formType": "manyToMany",
+          "dataSource": {
+            "model": "alerts"
+          },
+          "searchable": false,
+          "gridColumn": false,
+          "collection": true,
+          "inversedField": "attachments",
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ alerts }}",
+          "descriptions": {
+            "singular": "Alerts"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "incidents",
+          "name": "incidents",
+          "length": null,
+          "formType": "manyToMany",
+          "dataSource": {
+            "model": "incidents"
+          },
+          "searchable": false,
+          "gridColumn": false,
+          "collection": true,
+          "inversedField": "attachments",
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ incidents }}",
+          "descriptions": {
+            "singular": "Incidents"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "assets",
+          "name": "assets",
+          "length": null,
+          "formType": "manyToMany",
+          "dataSource": {
+            "model": "assets"
+          },
+          "searchable": false,
+          "gridColumn": false,
+          "collection": true,
+          "inversedField": "attachments",
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ assets }}",
+          "descriptions": {
+            "singular": "Assets"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "companies",
+          "name": "companies",
+          "length": null,
+          "formType": "manyToMany",
+          "dataSource": {
+            "model": "companies"
+          },
+          "searchable": false,
+          "gridColumn": false,
+          "collection": true,
+          "inversedField": "attachments",
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ companies }}",
+          "descriptions": {
+            "singular": "Companies"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "legal_matters",
+          "name": "legalMatters",
+          "length": null,
+          "formType": "manyToMany",
+          "dataSource": {
+            "model": "legal_matters"
+          },
+          "searchable": false,
+          "gridColumn": false,
+          "collection": true,
+          "inversedField": "attachments",
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ legalMatters }}",
+          "descriptions": {
+            "singular": "Legal Matters"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "evidences",
+          "name": "evidences",
+          "length": null,
+          "formType": "manyToMany",
+          "dataSource": {
+            "model": "evidences"
+          },
+          "searchable": false,
+          "gridColumn": false,
+          "collection": true,
+          "inversedField": "attachments",
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ evidences }}",
+          "descriptions": {
+            "singular": "Evidence"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "tasks",
+          "name": "tasks",
+          "length": null,
+          "formType": "manyToMany",
+          "dataSource": {
+            "model": "tasks"
+          },
+          "searchable": false,
+          "gridColumn": false,
+          "collection": true,
+          "inversedField": "attachments",
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ tasks }}",
+          "descriptions": {
+            "singular": "Tasks"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "vulnerabilities",
+          "name": "vulnerabilities",
+          "length": null,
+          "formType": "manyToMany",
+          "dataSource": {
+            "model": "vulnerabilities"
+          },
+          "searchable": false,
+          "gridColumn": false,
+          "collection": true,
+          "inversedField": "attachments",
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ vulnerabilities }}",
+          "descriptions": {
+            "singular": "Vulnerabilities"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "comments",
+          "name": "comments",
+          "length": null,
+          "formType": "manyToMany",
+          "dataSource": {
+            "model": "comments"
+          },
+          "searchable": false,
+          "gridColumn": false,
+          "collection": true,
+          "inversedField": "attachments",
+          "ownsRelationship": true,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ comments }}",
+          "descriptions": {
+            "singular": "Comments"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "string",
+          "name": "uuid",
+          "length": 36,
+          "formType": "text",
+          "dataSource": null,
+          "searchable": false,
+          "gridColumn": false,
+          "collection": false,
+          "inversedField": null,
+          "ownsRelationship": null,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": 255
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": true,
+          "unique": false,
+          "displayName": "{{ uuid }}",
+          "descriptions": {
+            "singular": "UUID"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "indicators",
+          "name": "indicators",
+          "length": null,
+          "formType": "manyToMany",
+          "dataSource": {
+            "model": "indicators"
+          },
+          "searchable": false,
+          "gridColumn": false,
+          "collection": true,
+          "inversedField": "attachments",
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ indicators }}",
+          "descriptions": {
+            "singular": "Indicators"
+          }
+        },
+        {
+          "@type": "AttributeMetadata",
+          "type": "malwares",
+          "name": "malwares",
+          "length": null,
+          "formType": "manyToMany",
+          "dataSource": {
+            "model": "malwares"
+          },
+          "searchable": false,
+          "gridColumn": false,
+          "collection": true,
+          "inversedField": "attachments",
+          "ownsRelationship": false,
+          "validation": {
+            "required": false,
+            "minlength": 0,
+            "maxlength": -1
+          },
+          "visibility": true,
+          "readable": true,
+          "writeable": true,
+          "identifier": false,
+          "unique": false,
+          "displayName": "{{ malwares }}",
+          "descriptions": {
+            "singular": "Malware"
+          }
+        }
+      ],
+      "writable": true,
+      "displayName": "{{ name }}",
+      "descriptions": {
+        "singular": "Attachment",
+        "plural": "Attachments"
+      },
+      "checked": true
+    }
+  ],
+  "viewTemplates": {
+    "attachments": [
+      {
+        "id": "modules/attachments/list",
+        "type": "rows",
+        "config": {
+          "rows": [
+            {
+              "columns": [
+                {
+                  "widgets": [
+                    {
+                      "type": "grid",
+                      "config": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "_moduleTemplate": "list",
+        "@type": "SystemViewTemplate"
+      },
+      {
+        "id": "modules/attachments/detail",
+        "type": "rows",
+        "config": {
+          "rows": [
+            {
+              "columns": [
+                {
+                  "style": "col-lg-9 col-md-8",
+                  "widgets": [
+                    {
+                      "type": "primaryDetail",
+                      "config": {
+                        "titleField": "name",
+                        "wid": "97e1bc2e-9999-4060-b467-bc9dc31f1ba4"
+                      }
+                    },
+                    {
+                      "type": "tabs",
+                      "config": {
+                        "tabs": [
+                          {
+                            "title": "Description",
+                            "widget": {
+                              "type": "rows",
+                              "config": {
+                                "rows": [
+                                  {
+                                    "columns": [
+                                      {
+                                        "style": "container-pane col-md-12",
+                                        "widgets": [
+                                          {
+                                            "type": "editableFormGroup",
+                                            "config": {
+                                              "usePlaceholder": true,
+                                              "rows": [
+                                                {
+                                                  "style": "padding-left-lg padding-right-lg",
+                                                  "columns": [
+                                                    {
+                                                      "fields": [
+                                                        {
+                                                          "name": "description",
+                                                          "highlightMode": false
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ],
+                                              "wid": "2921b122-5276-49c1-b825-e9a71558d5ed"
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "wid": "3fb94267-b143-41f4-bd30-be2a34808b97"
+                                  }
+                                ],
+                                "wid": "c98b47ba-b4bb-4567-a05a-7ca16a012dc9"
+                              }
+                            }
+                          },
+                          {
+                            "title": "Timeline",
+                            "widget": {
+                              "type": "timeline",
+                              "config": {
+                                "wid": "fb1f5c20-4da4-4635-9af5-a002420e3aae"
+                              }
+                            }
+                          },
+                          {
+                            "title": "Related Records",
+                            "widget": {
+                              "type": "relationship.subtab",
+                              "config": {
+                                "excludes": [
+                                  "notes",
+                                  "comments"
+                                ],
+                                "gridsConfig": {
+                                  "alerts": {
+                                    "columns": [
+                                      "name",
+                                      "type",
+                                      "severity",
+                                      "status",
+                                      "assignedTo"
+                                    ]
+                                  },
+                                  "assets": {
+                                    "columns": [
+                                      "hostname",
+                                      "ip",
+                                      "dateScanned",
+                                      "propertyOf",
+                                      "criticality"
+                                    ]
+                                  },
+                                  "companies": {
+                                    "columns": [
+                                      "name",
+                                      "url",
+                                      "status",
+                                      "type",
+                                      "industry"
+                                    ]
+                                  },
+                                  "people": {
+                                    "columns": [
+                                      "firstname",
+                                      "lastname",
+                                      "title",
+                                      "phoneWork",
+                                      "company"
+                                    ]
+                                  },
+                                  "tasks": {
+                                    "columns": [
+                                      "name",
+                                      "dueDate",
+                                      "priority",
+                                      "status",
+                                      "assignedToPerson"
+                                    ]
+                                  },
+                                  "incidents": {
+                                    "columns": [
+                                      "name",
+                                      "discoveredOn",
+                                      "phase",
+                                      "status",
+                                      "confirmation",
+                                      "severity",
+                                      "category",
+                                      "incidentLead"
+                                    ]
+                                  },
+                                  "vulnerabilities": {
+                                    "columns": [
+                                      "vulnerabilityId",
+                                      "name",
+                                      "severity",
+                                      "cvss",
+                                      "lastSeenDate",
+                                      "status"
+                                    ]
+                                  }
+                                },
+                                "wid": "a83f6e7c-169a-46c2-aad9-6659da721825"
+                              }
+                            }
+                          },
+                          {
+                            "title": "ReversingLabs-A1000 Report Data",
+                            "widget": {
+                              "type": "rows",
+                              "config": {
+                                "rows": [
+                                  {
+                                    "columns": [
+                                      {
+                                        "style": "container-pane col-md-12",
+                                        "widgets": [
+                                          {
+                                            "type": "editableFormGroup",
+                                            "config": {
+                                              "usePlaceholder": true,
+                                              "rows": [
+                                                {
+                                                  "style": "padding-left-lg padding-right-lg",
+                                                  "columns": [
+                                                    {
+                                                      "fields": [
+                                                        {
+                                                          "name": "rlDetails",
+                                                          "highlightMode": false
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ],
+                        "wid": "e3d3af10-d255-4582-82f5-d3b302c967ac"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "style": "col-lg-3 col-md-4",
+                  "widgets": [
+                    {
+                      "type": "editableFormGroup",
+                      "config": {
+                        "title": "Summary",
+                        "rows": [
+                          {
+                            "columns": [
+                              {
+                                "fields": [
+                                  "file",
+                                  "type",
+                                  "fileHash"
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "wid": "f7d8f099-6ab6-4180-b64c-ebcc84131c0b"
+                      }
+                    },
+                    {
+                      "type": "editableFormGroup",
+                      "config": {
+                        "title": "Details",
+                        "rows": [
+                          {
+                            "columns": [
+                              {
+                                "fields": [
+                                  "createUser",
+                                  "createDate"
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "wid": "815fe584-0e9d-42f1-bd6a-3f90b0499deb"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "wid": "0e9c089b-0281-4939-b518-f71caca79590"
+            }
+          ],
+          "wid": "1ee5d259-a199-4945-82a7-8eb2b0c5ee84"
+        },
+        "_moduleTemplate": "detail",
+        "@type": "SystemViewTemplate"
+      },
+      {
+        "id": "modules/attachments/form",
+        "type": "form",
+        "config": {
+          "rows": [
+            {
+              "columns": [
+                {
+                  "widgets": [
+                    {
+                      "type": "formGroup",
+                      "config": {
+                        "size": "large",
+                        "rows": [
+                          {
+                            "columns": [
+                              {
+                                "fields": [
+                                  "name"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "formGroup",
+                      "config": {
+                        "rows": [
+                          {
+                            "columns": [
+                              {
+                                "fields": [
+                                  "description"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "formGroup",
+                      "config": {
+                        "title": "Summary",
+                        "rows": [
+                          {
+                            "columns": [
+                              {
+                                "fields": [
+                                  "file",
+                                  "fileHash",
+                                  "type"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "_moduleTemplate": "form",
+        "@type": "SystemViewTemplate"
+      }
+    ]
+  },
+  "picklists": {
+    "attachments": [
+      {
+        "@type": "PicklistNames",
+        "name": "AttachmentsType",
+        "picklists": [
+          {
+            "@type": "Picklist",
+            "itemValue": "GSM Card",
+            "orderIndex": 11,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 53,
+            "uuid": "1afc1d4a-2a8d-4c6b-bf69-29afa45e79cc"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Media",
+            "orderIndex": 4,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 85,
+            "uuid": "465112a8-1c52-49db-a305-3cff996d647e"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Backup",
+            "orderIndex": 3,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 90,
+            "uuid": "48a1338d-8a6a-4107-aff5-97f56a9af3b3"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Virtual Machines",
+            "orderIndex": 7,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 92,
+            "uuid": "48e453c2-aa53-4a1c-9f73-c8f9ae219a43"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Malware",
+            "orderIndex": 5,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 111,
+            "uuid": "58b8bdee-a5d8-4e54-b514-05adc7bfee08"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Network Traffic",
+            "orderIndex": 9,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 128,
+            "uuid": "6f711ba0-46b3-4e83-9420-5cfe2803aae4"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Documents",
+            "orderIndex": 1,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 136,
+            "uuid": "76d53137-a3ad-4afc-93af-205b88e59b63"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Social Network Info",
+            "orderIndex": 2,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 145,
+            "uuid": "896339bc-18ad-449d-922a-551b4db06d39"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Metadata",
+            "orderIndex": 12,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 168,
+            "uuid": "9ad4871c-ef9a-4e44-a0e7-cc320041ad6f"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Browser Info",
+            "orderIndex": 6,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 189,
+            "uuid": "ad8c6890-590b-4837-993e-7ec76d0ce85e"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Logs",
+            "orderIndex": 0,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 216,
+            "uuid": "cb11ab90-cac4-41f2-b452-f653eca6299a"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Usb Item",
+            "orderIndex": 10,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 236,
+            "uuid": "ddd21a97-9393-4cd3-b073-aabca218fb8c"
+          },
+          {
+            "@type": "Picklist",
+            "itemValue": "Hard Drive Image",
+            "orderIndex": 8,
+            "color": null,
+            "icon": null,
+            "listName": "/api/3/picklist_names/91be0720-8088-42b0-95d8-1178b390e0f9",
+            "id": 245,
+            "uuid": "ea815582-d639-4c76-a7fd-9ddb5e1c7792"
+          }
+        ],
+        "id": 21,
+        "uuid": "91be0720-8088-42b0-95d8-1178b390e0f9"
+      }
+    ]
+  },
+  "includeMmd": true
+}

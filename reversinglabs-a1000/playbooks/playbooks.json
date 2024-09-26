@@ -1,0 +1,645 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "@type": "WorkflowCollection",
+      "name": "ReversingLabs A1000 Connector Sample Playbooks",
+      "description": "ReversingLabs A1000 Connector playbooks that you can use to submit sample to ReversingLabs-A1000 server for sandbox, retrieve report of submitted sample using file hash and re-analyzed sample using file hash.",
+      "visible": true,
+      "image": null,
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Action : Submit Sample to RL A1000",
+          "collection": "/api/3/workflow_collections/d06a308c-13a5-498e-8f6a-88ab90c13255",
+          "tag": "ReversingLabs A1000",
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/d5c74549-6d46-4417-96d5-0f1ab78212e1",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": {
+                "route": "2313a338-6923-434a-8c4f-19d519db7fe5",
+                "resources": [
+                  "attachments"
+                ],
+                "inputVariables": []
+              },
+              "status": null,
+              "left": 468,
+              "top": 9,
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "d5c74549-6d46-4417-96d5-0f1ab78212e1"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Call update attachment PB",
+              "arguments": {
+                "script": "/wf/workflow/tasks/map",
+                "arguments": {
+                  "collection": "{{vars.list}}",
+                  "workflow_iri": "/api/3/workflows/cd2bb038-bc70-4d69-80e6-166d6a8b54b4"
+                }
+              },
+              "status": null,
+              "left": 472,
+              "top": 580,
+              "stepType": "/api/3/workflow_step_types/ee73e569-2188-43fe-a7f0-1964ba82a4de",
+              "uuid": "c49cd4f4-a945-4858-9258-ea9972df8b77"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Submitted File",
+              "arguments": {
+                "exist": "{% for hash, file_iri in vars.var_submit_result.pre_exist.items() %}        {{vars.list.append(  [ hash , vars.attach_details[file_iri] ]  ) }}    {% endfor %}",
+                "submitted": "{% for hash, file_iri in vars.var_submit_result.submitted.items() %}        {{vars.list.append(  [ hash , vars.attach_details[file_iri] ]  ) }}    {% endfor %}"
+              },
+              "status": null,
+              "left": 470,
+              "top": 488,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "c78514fc-7f43-41c6-a75a-c63d5613ed49"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save response",
+              "arguments": {
+                "var_submit_result": "{{vars.result.data}}"
+              },
+              "status": null,
+              "left": 472,
+              "top": 420,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "b6858aef-8776-4529-ba42-767fdfc48ce8"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Set global vars",
+              "arguments": {
+                "list": "[]",
+                "attach_details": "{}"
+              },
+              "status": null,
+              "left": 469,
+              "top": 100,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "53aa036d-56fc-427f-84de-a2ed7afd3daf"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Upload Sample",
+              "arguments": {
+                "name": "ReversingLabsA1000",
+                "config": "c9721cbd-4ce6-4365-a413-d0156dd6eb6d",
+                "params": {
+                  "file_iri": "{{vars.file_iri_list}}"
+                },
+                "version": "1.0.0",
+                "connector": "reversinglabs-a1000",
+                "operation": "upload_sample",
+                "operationTitle": "Upload Sample",
+                "operationOutput": {
+                  "pre_exist": [],
+                  "submitted": [],
+                  "submit_failed": []
+                }
+              },
+              "status": null,
+              "left": 472,
+              "top": 340,
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "fd30b840-ac27-4e38-ab09-1112af1ab15d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Fetch all file iri list from select attachments",
+              "arguments": {
+                "file_iri_list": "{{vars.attach_details.keys() | list }}"
+              },
+              "status": null,
+              "left": 468,
+              "top": 260,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "8bff3a02-9a35-41f1-84f2-5df092c1f433"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save attachment iri and file iri",
+              "arguments": {
+                "__data": "{% for each_attach_dict in  vars.request.data.records %}   {{vars.attach_details.update ({ each_attach_dict.file[\"@id\"] : each_attach_dict[\"@id\"] })}} {% endfor %}"
+              },
+              "status": null,
+              "left": 466,
+              "top": 180,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "b63cda27-2e9d-4f83-9f6b-366b8ee70cd3"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "49d0a6f7-6600-4ccf-81fb-b06d743db9e3",
+              "name": "Set global vars -> Save Data",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/b63cda27-2e9d-4f83-9f6b-366b8ee70cd3",
+              "sourceStep": "/api/3/workflow_steps/53aa036d-56fc-427f-84de-a2ed7afd3daf"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "eba885ad-2d22-4b77-849b-bdea9a631e85",
+              "name": "Save attachment iri and file iri -> Fetch all file iri list from select attachments",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/8bff3a02-9a35-41f1-84f2-5df092c1f433",
+              "sourceStep": "/api/3/workflow_steps/b63cda27-2e9d-4f83-9f6b-366b8ee70cd3"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "043565c3-a0b3-4145-b306-1bc4c4f9419a",
+              "name": "Submitted File -> Call update attachment PB",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/c49cd4f4-a945-4858-9258-ea9972df8b77",
+              "sourceStep": "/api/3/workflow_steps/c78514fc-7f43-41c6-a75a-c63d5613ed49"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "9fb080a9-cf09-4e78-b7b0-84106b263a5e",
+              "name": "Start -> Set global vars",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/53aa036d-56fc-427f-84de-a2ed7afd3daf",
+              "sourceStep": "/api/3/workflow_steps/d5c74549-6d46-4417-96d5-0f1ab78212e1"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "8b042fc8-3a12-4931-88da-81bbfdef3883",
+              "name": "Upload Sample -> Save response",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/b6858aef-8776-4529-ba42-767fdfc48ce8",
+              "sourceStep": "/api/3/workflow_steps/fd30b840-ac27-4e38-ab09-1112af1ab15d"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "0711d542-bc0a-4ad6-aca0-a782173023a5",
+              "name": "Fetch all file iri list from select attachments -> Upload Sample",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/fd30b840-ac27-4e38-ab09-1112af1ab15d",
+              "sourceStep": "/api/3/workflow_steps/8bff3a02-9a35-41f1-84f2-5df092c1f433"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "23a4ac14-08d9-4ff3-a5d5-95f3c430da9d",
+              "name": "Save response -> Submitted File",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/c78514fc-7f43-41c6-a75a-c63d5613ed49",
+              "sourceStep": "/api/3/workflow_steps/b6858aef-8776-4529-ba42-767fdfc48ce8"
+            }
+          ],
+          "uuid": "c492757a-b726-438d-8b21-7a252f4cd92c"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Update attachment with file hash",
+          "collection": "/api/3/workflow_collections/d06a308c-13a5-498e-8f6a-88ab90c13255",
+          "tag": "ReversingLabs A1000",
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/76c3ee1e-c51d-4346-97c2-de3287c7bea8",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": [],
+              "status": null,
+              "left": 160,
+              "top": 0,
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "76c3ee1e-c51d-4346-97c2-de3287c7bea8"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update attachment",
+              "arguments": {
+                "script": "/wf/workflow/tasks/update_data",
+                "arguments": {
+                  "resource": "{'fileHash' : '{{vars.loop_resource[0]}}'  }",
+                  "collection": "{{vars.loop_resource[1]}}"
+                }
+              },
+              "status": null,
+              "left": 160,
+              "top": 146,
+              "stepType": "/api/3/workflow_step_types/ee73e569-2188-43fe-a7f0-1964ba82a4de",
+              "uuid": "317ec7cc-56f3-4bda-9f53-95bd4f6cc048"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "1cdcfe7d-a660-46e6-9567-95d22cbd0670",
+              "name": "Start -> Update attachment",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/317ec7cc-56f3-4bda-9f53-95bd4f6cc048",
+              "sourceStep": "/api/3/workflow_steps/76c3ee1e-c51d-4346-97c2-de3287c7bea8"
+            }
+          ],
+          "uuid": "cd2bb038-bc70-4d69-80e6-166d6a8b54b4"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Action: GET report using file hash from RL A1000",
+          "collection": "/api/3/workflow_collections/d06a308c-13a5-498e-8f6a-88ab90c13255",
+          "tag": "ReversingLabs A1000",
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/4e0ff9ad-8863-4f38-8428-e4cb7a10b9cf",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get all file hash",
+              "arguments": {
+                "file_hash_list": "{{vars.attach_details.keys() | list }}"
+              },
+              "status": null,
+              "left": 391,
+              "top": 280,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "965984cc-be69-4be6-8c6a-22852d391ca3"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Set global variables",
+              "arguments": {
+                "list": "[]",
+                "attach_details": "{}"
+              },
+              "status": null,
+              "left": 386,
+              "top": 108,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "6bfed558-7dc3-4a50-a079-7cab9143af44"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Attachment",
+              "arguments": {
+                "script": "/wf/workflow/tasks/map",
+                "arguments": {
+                  "collection": "{{vars.rl_report.response[0].results}}",
+                  "workflow_iri": "/api/3/workflows/53cd92b5-a01a-49f7-bcb5-4c65584d63fc"
+                }
+              },
+              "status": null,
+              "left": 388,
+              "top": 528,
+              "stepType": "/api/3/workflow_step_types/ee73e569-2188-43fe-a7f0-1964ba82a4de",
+              "uuid": "899da606-9c64-4813-89af-0136452e0448"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save attachment iri and file hash",
+              "arguments": {
+                "__data": "{% for each_attach_dict in  vars.request.data.records %}   {{vars.attach_details.update ({ each_attach_dict[\"fileHash\"] : each_attach_dict[\"@id\"] })}} {% endfor %}"
+              },
+              "status": null,
+              "left": 387,
+              "top": 200,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "160713cb-209a-4a0f-b439-ab641d5e0228"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": {
+                "route": "6be86950-1d02-4792-86f6-49da329a7b6a",
+                "resources": [
+                  "attachments"
+                ],
+                "inputVariables": []
+              },
+              "status": null,
+              "left": 391,
+              "top": 20,
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "4e0ff9ad-8863-4f38-8428-e4cb7a10b9cf"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save response",
+              "arguments": {
+                "rl_report": "{{vars.result.data}}"
+              },
+              "status": null,
+              "left": 392,
+              "top": 440,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "0a1c1ecc-7f5f-4a00-96ac-8a0a15e82cf0"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get report from ReversingLabs A1000 using file hash",
+              "arguments": {
+                "name": "ReversingLabsA1000",
+                "config": "c9721cbd-4ce6-4365-a413-d0156dd6eb6d",
+                "params": {
+                  "file_hash": "{{vars.file_hash_list}}"
+                },
+                "version": "1.0.0",
+                "connector": "reversinglabs-a1000",
+                "operation": "get_report",
+                "operationTitle": "Get Report using File Hash",
+                "operationOutput": {
+                  "report": [
+                    {
+                      "results": []
+                    }
+                  ],
+                  "not_found": ""
+                }
+              },
+              "status": null,
+              "left": 390,
+              "top": 360,
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "dba2f58f-d650-4af3-a390-fb318014f481"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "c4a201b9-195d-4abf-91d6-4963dc0528b2",
+              "name": "Set global variables -> Save attachment iri and file hash",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/160713cb-209a-4a0f-b439-ab641d5e0228",
+              "sourceStep": "/api/3/workflow_steps/6bfed558-7dc3-4a50-a079-7cab9143af44"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "efce6b3d-d402-4e0b-bd1e-7bf1a14f73f4",
+              "name": "Save attachment iri and file hash -> Get all file hash",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/965984cc-be69-4be6-8c6a-22852d391ca3",
+              "sourceStep": "/api/3/workflow_steps/160713cb-209a-4a0f-b439-ab641d5e0228"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "8a5f5510-d37c-4956-b5a3-a92470fde016",
+              "name": "Save response -> Update Attachment",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/899da606-9c64-4813-89af-0136452e0448",
+              "sourceStep": "/api/3/workflow_steps/0a1c1ecc-7f5f-4a00-96ac-8a0a15e82cf0"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "a4d1cc46-0ee3-451d-9d10-e2221849bb94",
+              "name": "Start -> Set global variables",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/6bfed558-7dc3-4a50-a079-7cab9143af44",
+              "sourceStep": "/api/3/workflow_steps/4e0ff9ad-8863-4f38-8428-e4cb7a10b9cf"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "e2511bf8-8299-48ac-a467-0e633994d65f",
+              "name": "Get all file hash -> Get report from ReversingLabs A1000 using file hash",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/dba2f58f-d650-4af3-a390-fb318014f481",
+              "sourceStep": "/api/3/workflow_steps/965984cc-be69-4be6-8c6a-22852d391ca3"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "45e1b006-37de-491c-b38f-915f78672605",
+              "name": "Get report from ReversingLabs A1000 using file hash -> Save response",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/0a1c1ecc-7f5f-4a00-96ac-8a0a15e82cf0",
+              "sourceStep": "/api/3/workflow_steps/dba2f58f-d650-4af3-a390-fb318014f481"
+            }
+          ],
+          "uuid": "62b93383-acb3-4b10-b09d-bda1e115deda"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Update attachment with reversingLabs report data",
+          "collection": "/api/3/workflow_collections/d06a308c-13a5-498e-8f6a-88ab90c13255",
+          "tag": "ReversingLabs A1000",
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/450ece07-a658-4db7-970e-80602cb7b755",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Update attachment with reversingLabs data",
+              "arguments": {
+                "resource": "{'rlDetails':  \"<table class='table', border=1>   <tr>   <td width='200'>Classification Reason</td>   <td>{{vars.loop_resource.classification_reason}}</td>   </tr>      <tr>   <td>Local First Seen</td>   <td>{{vars.loop_resource.local_first_seen}}</td>   </tr>      <tr>   <td>Local Last Seen</td>   <td>{{vars.loop_resource.local_last_seen}}</td>   </tr>      <tr>   <td>Threat Status</td>   <td>{{vars.loop_resource.threat_status}}</td>   </tr>      <tr>   <td>Trust Factor</td>   <td>{{vars.loop_resource.trust_factor}}</td>   </tr>      <tr>   <td>Threat Level</td>   <td>{{vars.loop_resource.threat_level}}</td>   </tr>   <tr>   <td>Threat Name</td>   <td> {% if vars.loop_resource.threat_name != null %} {{vars.loop_resource.threat_name}} {% endif %}</td>   </tr>    </table>\" }",
+                "collection": "{{vars.attachment_id}}"
+              },
+              "status": null,
+              "left": 252,
+              "top": 200,
+              "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928722",
+              "uuid": "93a89b8d-793f-49a4-8a7a-c879aaff95f9"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Find attachment id",
+              "arguments": {
+                "threat_name": "{% if vars.loop_resource.threat_name != null %} {{vars.loop_resource.threat_name}} {% endif %}",
+                "attachment_id": "{{vars.attach_details[vars.loop_resource[\"sha1\"]]}}"
+              },
+              "status": null,
+              "left": 254,
+              "top": 100,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "32eefe11-8e8c-4820-a356-dc41db4dfdb3"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": [],
+              "status": null,
+              "left": 260,
+              "top": 8,
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "450ece07-a658-4db7-970e-80602cb7b755"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "9ebd6a01-4ee0-4209-93a8-cffa7cad832c",
+              "name": "Start -> Find attachment id",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/32eefe11-8e8c-4820-a356-dc41db4dfdb3",
+              "sourceStep": "/api/3/workflow_steps/450ece07-a658-4db7-970e-80602cb7b755"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "d6dca128-739a-4002-aa54-1bc0b3c77060",
+              "name": "Find attachment id -> Update attachment with reversingLabs data",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/93a89b8d-793f-49a4-8a7a-c879aaff95f9",
+              "sourceStep": "/api/3/workflow_steps/32eefe11-8e8c-4820-a356-dc41db4dfdb3"
+            }
+          ],
+          "uuid": "53cd92b5-a01a-49f7-bcb5-4c65584d63fc"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Action: Re-analyzed Sample using RL A1000",
+          "collection": "/api/3/workflow_collections/d06a308c-13a5-498e-8f6a-88ab90c13255",
+          "tag": "ReversingLabs A1000",
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/4cdb9ed4-212f-47e4-ac5d-9d38545f782d",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Save attachment iri and file hash",
+              "arguments": {
+                "__data": "{% for each_attach_dict in  vars.request.data.records %}   {{vars.attach_details.update ({ each_attach_dict[\"fileHash\"] : each_attach_dict[\"@id\"] })}} {% endfor %}"
+              },
+              "status": null,
+              "left": 353,
+              "top": 180,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "47687a6c-cc6d-4372-8bc0-1e1c10c8b5a9"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Re Analysed Sample using file hash",
+              "arguments": {
+                "name": "ReversingLabsA1000",
+                "config": "c9721cbd-4ce6-4365-a413-d0156dd6eb6d",
+                "params": {
+                  "file_hash": "{{vars.file_hash_list}}"
+                },
+                "version": "1.0.0",
+                "connector": "reversinglabs-a1000",
+                "operation": "re_analyze_sample",
+                "operationTitle": "Re-analyze Sample using File Hash",
+                "operationOutput": {
+                  "not_found": "",
+                  "re_analyzed": [
+                    {
+                      "results": []
+                    }
+                  ]
+                }
+              },
+              "status": null,
+              "left": 351,
+              "top": 354,
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "90fd8b92-2947-41fd-a3b3-08bebd94cb65"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get all file hash",
+              "arguments": {
+                "file_hash_list": "{{vars.attach_details.keys() | list }}"
+              },
+              "status": null,
+              "left": 352,
+              "top": 266,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "110b442c-c91f-42f6-9d51-27ddd00b843d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Set global variables",
+              "arguments": {
+                "attach_details": "{}"
+              },
+              "status": null,
+              "left": 350,
+              "top": 92,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "e40bc06d-c7fe-4107-9911-d7aed839049b"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save response",
+              "arguments": {
+                "re_analyzed": "{{vars.result.data}}"
+              },
+              "status": null,
+              "left": 349,
+              "top": 440,
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "1d48e5a0-ce7c-480e-b20d-0397e52ea919"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": {
+                "route": "e8b1b3da-a3db-4197-aebc-d556c69ce4e8",
+                "resources": [
+                  "attachments"
+                ],
+                "inputVariables": []
+              },
+              "status": null,
+              "left": 350,
+              "top": 12,
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "4cdb9ed4-212f-47e4-ac5d-9d38545f782d"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "26115ebd-c64e-45fd-bd78-79f94a9e6fd9",
+              "name": "Set global variables -> Save attachment iri and file hash",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/47687a6c-cc6d-4372-8bc0-1e1c10c8b5a9",
+              "sourceStep": "/api/3/workflow_steps/e40bc06d-c7fe-4107-9911-d7aed839049b"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "3cc0cb29-240c-4b93-9ec3-92dacbd9e609",
+              "name": "Save attachment iri and file hash -> Get all file hash",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/110b442c-c91f-42f6-9d51-27ddd00b843d",
+              "sourceStep": "/api/3/workflow_steps/47687a6c-cc6d-4372-8bc0-1e1c10c8b5a9"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "c588f9cd-aa79-4202-9cb5-eea54a01e249",
+              "name": "Start -> Set global variables",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/e40bc06d-c7fe-4107-9911-d7aed839049b",
+              "sourceStep": "/api/3/workflow_steps/4cdb9ed4-212f-47e4-ac5d-9d38545f782d"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "cc095b4d-077a-43ce-8f2b-c455d9e3fc6b",
+              "name": "Get all file hash -> Re Analysed Sample using file hash",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/90fd8b92-2947-41fd-a3b3-08bebd94cb65",
+              "sourceStep": "/api/3/workflow_steps/110b442c-c91f-42f6-9d51-27ddd00b843d"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "ce6980ad-592f-4512-8ce5-bc2573af39c9",
+              "name": "Re Analysed Sample using file hash -> Save response",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/1d48e5a0-ce7c-480e-b20d-0397e52ea919",
+              "sourceStep": "/api/3/workflow_steps/90fd8b92-2947-41fd-a3b3-08bebd94cb65"
+            }
+          ],
+          "uuid": "b7f59b7f-f990-4818-8d25-7323cf29ca5e"
+        }
+      ],
+      "uuid": "d06a308c-13a5-498e-8f6a-88ab90c13255"
+    }
+  ]
+}
